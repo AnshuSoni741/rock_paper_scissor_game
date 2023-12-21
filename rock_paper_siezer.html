@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Siezer</title>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    body{
+        background-color:#0a9396;
+        color: #e9d8a6;
+        margin: auto;
+    }
+    #heading{
+        height: 7vmax;
+        width: auto;
+        text-align: center;
+        background-color: #ee9b00;
+        color: #ae3317;
+        padding-top: 2vmin;
+        font-size: 70px;
+    }
+    .main{
+        float: left;
+        height: 70vmin;
+        width: 100vmin;
+        background-color: #005f73;
+        color: #ee9b00;
+        margin: auto;
+        border-radius: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 10vmin;
+        /* below two lines are for flex content */
+        justify-content: center; /* HORIZONTAL centralized */
+        align-items: center;
+        margin-left: 20px;
+
+    }
+    .user_option_btn{
+        height: 20vmin;
+        width: 20vmin;
+        border-radius: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+
+        /* margin-top: 10vmin; */
+        /* flex-wrap: wrap; */
+    }
+    :hover.user_option_btn{
+        /* opacity: 0.5; */
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: black;
+    }
+    #output_div{
+        background-color: #5b0e1c;
+        color:#a5f30a;
+        font-size: 60px;
+        border-radius: 2rem;
+        width: 90vmin;
+        text-align: center;
+    }
+    #right_mist{
+        /* background-color: yellow; */
+        float:left;
+        margin-top: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        /* background-color: turquoise; */
+        height: 30vmin;
+        width: 55vmin;
+        column-gap: 20px;
+        row-gap: 30px;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    #left_mist{
+        float: left;
+        margin-top: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        /* background-color: turquoise; */
+        height: 30vmin;
+        width: 55vmin;
+        column-gap: 20px;
+        row-gap: 30px;
+        margin-left: 30px;
+        /* margin-right: 0px; */
+        /* align-items: center; */
+        /* display: none; */
+        justify-content: center;
+        align-items: center;
+    }
+    .name{
+        color: #8c1f33;
+        /* color: #b1203b; */
+        background-color :#0a9396;
+        font-size: 5vmin;
+        text-align: center;
+        /* margin-left: 10px; */
+        margin-left: 0px;
+    }
+    .you_name{
+        margin-left:40px;
+
+    }
+    #com_score_show{
+        color: #0813e2 ;
+        font-size: 38px;
+        margin-left: 60px;
+        /* background-color: wh; */
+    }
+
+    #com_score{
+        color: #5b0e1c;
+        background-color: none;
+        font-size: 50px;
+        width: 4rem;
+        text-align: center;
+    }
+
+    #user_score{
+        color: #5b0e1c;
+        background-color:none;
+        font-size: 50px;
+        width: 9rem;
+        text-align: center;
+    }
+
+    #reset_button{
+        font-size: 30px;
+        padding-left: 1.5rem;
+        text-align: center;
+        background-color: #ee9b00;
+        color: #5b0e1c;
+        width: 25vmin;
+        height: 7vmin;
+        display: flex;
+        margin-top: 75vmin;
+        margin-left: 100vmin;
+        border-radius: 2rem;
+        /* float: left; */
+    }
+
+
+</style>
+</head>
+<body>
+    <h1 id="heading">*****Rock Paper Scissor*****</h1>
+<div id="left_mist">
+    <img src="rock_paper_sizer_image\rock_real.png" alt="img left" height="200px" id="compt_opt_img">
+    <p class="name">COMPUTER CHOICE</p>
+    <p id="com_score_show" style="margin-left: 0px;">Computer Score : <p id="com_score">00</p></p>
+</div>
+    <div class="main">
+        <button class="user_option_btn" id="rock"><img src="rock_paper_sizer_image\rockk.png" height="115px" alt="rock"></button>
+        <button class="user_option_btn" id="paper"><img src="rock_paper_sizer_image\paperr.png" height="115px" alt="paper"></button>
+        <button class="user_option_btn" id="scissor"><img src="rock_paper_sizer_image\sciessor.png" height="115px" alt="scissor"></button>
+        <div id="output_div">CHOOSE YOUR OPTION!</div>
+    </div>
+    <div id="right_mist">
+        <img src="rock_paper_sizer_image\rock_real_right.png" alt="img right" height="200px" id="user_opt_img">
+        <p class="name you_name" > YOUR CHOICE</p>
+        <p id="com_score_show">Your Score : <p id="user_score">00</p></p>
+    </div>
+    <button id="reset_button">RESET</button>
+</body>
+<script>
+
+
+    //java script starting
+    let user_opt_btn = document.querySelectorAll(".user_option_btn");
+    let show_status = document.querySelector("#output_div");
+    let show_com_score = document.querySelector("#com_score");
+    let show_user_score = document.querySelector("#user_score");
+    let user_option_image = document.querySelector("#user_opt_img");
+    let compt_option_image = document.querySelector("#compt_opt_img");
+    let reset_buttor = document.querySelector("#reset_button");
+
+
+let user_score = 0;
+let com_score = 0;
+
+
+
+//generate computer choice calculation of computer choice 
+let generate_computer_choice= ()=>{
+    const option = ["rock","paper","scissor"];
+    const ran_num =  Math.floor(Math.random() * 3);
+    const computer_choice = option[ran_num];
+    return computer_choice;
+}
+
+
+//show computer selection
+let show_computer_status = (computer_choice)=>{
+if(computer_choice==="rock"){
+        compt_option_image.setAttribute("src","rock_paper_sizer_image/rockk.png");
+    }
+    else if(computer_choice==="paper"){
+        compt_option_image.setAttribute("src","rock_paper_sizer_image/paperr.png");
+    }
+    else{
+        compt_option_image.setAttribute("src","rock_paper_sizer_image/sciessor.png");
+    }
+}
+
+
+//show_user status
+let show_user_status = (user_choice)=>{
+if(user_choice==="rock"){
+        user_option_image.setAttribute("src","rock_paper_sizer_image/rockk.png");
+    }
+    else if(user_choice==="paper"){
+        user_option_image.setAttribute("src","rock_paper_sizer_image/paperr.png");
+    }
+    else{
+        user_option_image.setAttribute("src","rock_paper_sizer_image/sciessor.png");
+    }
+}
+
+
+
+//play game implement logic of game
+let play_game = (user_option,com_option)=>{
+    let user_win = true;
+    let draw = false;
+    if(user_option===com_option){
+        draw = true;
+    }
+    else{
+        if(user_option=="rock"){
+            //computer option choice is paper || scissor 
+            user_win = (com_option === "paper"?false:true);
+        } 
+        else if(user_option=="paper"){
+            //computer option choice is scissor||rock             
+            user_win = (com_option === "scissor"?false:true);
+        }     
+        else{//user have scissor
+            //computer option choice is rock||paper             
+            user_win = (com_option === "rock"?false:true);
+        }
+    }
+    print_result(user_win,draw);
+}
+
+
+
+
+
+
+//print result after play game turn     
+let print_result = (user_win,draw)=>
+        {
+            if(draw){
+                // console.log("OOPS! MATCH IS DRAW.....")
+                show_status.innerText = "OOPs! MATCH IS DRAW.....";
+                show_status.style.backgroundColor = "#ee9b00";
+                show_status.style.color = "#5b0e1c";
+            }
+            else{
+                if(user_win){
+                    // console.log(`HORRAY! YOU ARE WINNER....`);
+                    show_status.innerText = "HURRAY! YOU ARE WINNER....";
+                    show_status.style.backgroundColor = "green";
+                    show_status.style.color = "yellow";
+                    user_score++;
+                    show_user_score.innerText = user_score;
+                }
+                else{
+                    //console.log(`YESS! I AM WINNER.....`);
+                    show_status.innerText = "YES! COMPUTER IS WINNER.....";
+                    show_status.style.backgroundColor = "#5b0e1c";
+                    show_status.style.color = "yellow";
+                    com_score++;
+                    show_com_score.innerText = com_score;
+                }
+            }
+        }
+
+
+//addition of event listener on each button by for each loop whe we want to play game
+        user_opt_btn.forEach( (opt)=> {
+            opt.addEventListener("click",()=>{
+                let user_option = opt.getAttribute("id");
+                let com_option = generate_computer_choice();
+                show_computer_status(com_option);
+                show_user_status(user_option);
+                // console.log(`user choice is ${user_option}`);
+                // console.log(`computer choice is ${com_option}`);
+                play_game(user_option,com_option);
+            });
+        });
+        
+
+//logic for reset game
+        let reset_game = ()=>{
+            show_status.innerText = "START GAME ! WITH YOUR CHOICE";
+            compt_option_image.setAttribute("src","rock_paper_sizer_image\\rock_real.png");
+            user_option_image.setAttribute("src","rock_paper_sizer_image\\rock_real_right.png");
+            show_com_score.innerText = 0;
+            show_user_score.innerText = 0;
+            com_score = 0;
+            user_score = 0;
+        }
+        
+reset_buttor.addEventListener("click",reset_game);
+        
+
+</script>
+</html>
