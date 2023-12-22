@@ -28,7 +28,7 @@
     }
     #heading{
         height: 100px;
-        width: 1400px; 
+        /* width: 960px;  */
         text-align: center;
         padding-left: 30px;
         background-color: #ee9b00;
@@ -121,45 +121,7 @@
         transition: 1s; 
         /* above will be time to incate the change of time */
     }
-    
-    
-    /* //FOR ANIMATION */
-    @keyframes output_ds{
-        from{
-            left: 300px;
-        }
-        to{
-            right: 300px;
-        }
-        /* 0%{
-            
-        }
-        20%{
-           
-            right: 120px;
-            background-color: #0a9396;
-        }
-        40%{
-           
-        }
-        60%{
-           
-            right: 300px;
-            background-color: crimson;
 
-        }
-        80%{
-               
-                left: 60px;
-                background-color: crimson;
-            }
-
-        99%{
-                
-                left : 60px;
-                background-color: crimson;
-            } */
-        }
     #right_mist{
         /* background-color: yellow; */
         float:left;
@@ -260,6 +222,39 @@
 
 
 
+
+
+
+    /* addtion.... */
+    .loading-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        
+   .hide{
+    display:none;
+   }
+
+        .loading-circle {
+            width: 100%;
+            height: 100%;
+            border: 10px solid rgb(103, 8, 8);
+            border-top: 10px solid transparent;
+            border-radius: 100%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
 </style>
 </head>
 <body>
@@ -268,7 +263,10 @@
     <div class="inner_body">
 
 <div id="left_mist">
-    <img src="rock_paper_sizer_image\rock_real.png" alt="img left" height="200px" id="compt_opt_img">
+    <div class="loading-container hide">
+        <div class="loading-circle"></div>
+    </div>
+    <img src="rock_paper_sizer_image\rock_real.png" alt="img left" height="200px" id="compt_opt_img" class="">
     <p class="name">COMPUTER CHOICE</p>
     <p id="com_score_show">Computer Score : <p id="com_score">00</p></p>
 </div>
@@ -301,16 +299,52 @@
     let user_option_image = document.querySelector("#user_opt_img");
     let compt_option_image = document.querySelector("#compt_opt_img");
     let reset_buttor = document.querySelector("#reset_button");
+    let processing_img = document.querySelectorAll(".loading-container")[0];
 
 
 
 let user_score = 0;
 let com_score = 0;
 
+// user_opt_btn[0].disabled = true;
+// user_opt_btn[1].disabled=true;
+// user_opt_btn[2].disabled=true;
 
 
+const enable_user_option = ()=>{
+    for(let op of user_opt_btn){
+       op.disabled = false;
+    }
+}
+
+
+const disable_user_option = ()=>{
+    for(let op of user_opt_btn){
+       op.disabled = true;
+    }
+}
+// disable_user_option();
+//fucntion to show computer processing
+const processing_start = ()=>{
+processing_img.classList.remove("hide");
+compt_option_image.classList.add("hide");
+disable_user_option();
+}
+
+//function to remove processing show
+function processing_stopt(){
+    processing_img.classList.add("hide");
+    compt_option_image.classList.remove("hide");
+    enable_user_option();
+}
+
+
+
+// processing_stopt();
+// processing_start();
 //generate computer choice calculation of computer choice 
 let generate_computer_choice= ()=>{
+    processing_start();
     const option = ["rock","paper","scissor"];
     const ran_num =  Math.floor(Math.random() * 3);
     const computer_choice = option[ran_num];
@@ -379,9 +413,14 @@ let play_game = (user_option,com_option)=>{
 //print result after play game turn     
 let print_result = (user_win,draw)=>
         {
+
+        show_status.innerText = "Getting AI's Response....... ";
+        // setTimeout();
+
+        let show_res_after_pro = ()=>{
             if(draw){
                 // console.log("OOPS! MATCH IS DRAW.....")
-                show_status.innerText = "OOPs! MATCH IS DRAW.....";
+                show_status.innerText = "OOPs! MATCH IS DRAW....";
                 show_status.style.backgroundColor = "#ee9b00";
                 show_status.style.color = "#5b0e1c";
             }
@@ -403,9 +442,11 @@ let print_result = (user_win,draw)=>
                     show_com_score.innerText = com_score;
                 }
             }
+            processing_stopt();
         }
 
-
+        setTimeout(show_res_after_pro, 4000);
+    }
 
 //addition of event listener on each button by for each loop whe we want to play game
         user_opt_btn.forEach( (opt)=> {
